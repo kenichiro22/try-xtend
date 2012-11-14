@@ -24,7 +24,9 @@
 							<goal>testCompile</goal>
 						</goals>
 						<!-- optionally you can configure a different target folder -->
-						<configuration> <outputDirectory>xtend-gen</outputDirectory> </configuration>
+						<configuration>
+							<outputDirectory>src/main/tend-gen</outputDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
