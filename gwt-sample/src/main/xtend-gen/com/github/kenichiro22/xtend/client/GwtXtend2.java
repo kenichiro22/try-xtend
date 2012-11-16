@@ -108,41 +108,49 @@ public class GwtXtend2 implements EntryPoint, AsyncCallback<String> {
           String _nameField = GwtXtend2.messages.nameField();
           it.setText(_nameField);
           it.setFocus(true);
+          final Procedure1<KeyUpEvent> _function = new Procedure1<KeyUpEvent>() {
+              public void apply(final KeyUpEvent it) {
+                int _nativeKeyCode = it.getNativeKeyCode();
+                boolean _equals = (_nativeKeyCode == KeyCodes.KEY_ENTER);
+                if (_equals) {
+                  GwtXtend2.this.sendNameToServer();
+                }
+              }
+            };
+          it.addKeyUpHandler(new KeyUpHandler() {
+              public void onKeyUp(KeyUpEvent event) {
+                _function.apply(event);
+              }
+          });
         }
       };
     ObjectExtensions.<TextBox>operator_doubleArrow(
       this.nameField, _function);
-    final Procedure1<KeyUpEvent> _function_1 = new Procedure1<KeyUpEvent>() {
-        public void apply(final KeyUpEvent event) {
-          int _nativeKeyCode = event.getNativeKeyCode();
-          boolean _equals = (_nativeKeyCode == KeyCodes.KEY_ENTER);
-          if (_equals) {
-            GwtXtend2.this.sendNameToServer();
-          }
+    final Procedure1<Button> _function_1 = new Procedure1<Button>() {
+        public void apply(final Button it) {
+          it.addStyleName("sendButton");
+          final Procedure1<ClickEvent> _function = new Procedure1<ClickEvent>() {
+              public void apply(final ClickEvent it) {
+                GwtXtend2.this.sendNameToServer();
+              }
+            };
+          it.addClickHandler(new ClickHandler() {
+              public void onClick(ClickEvent event) {
+                _function.apply(event);
+              }
+          });
         }
       };
-    this.nameField.addKeyUpHandler(new KeyUpHandler() {
-        public void onKeyUp(KeyUpEvent event) {
-          _function_1.apply(event);
-        }
-    });
-    this.sendButton.addStyleName("sendButton");
-    final Procedure1<ClickEvent> _function_2 = new Procedure1<ClickEvent>() {
-        public void apply(final ClickEvent it) {
-          GwtXtend2.this.sendNameToServer();
-        }
-      };
-    this.sendButton.addClickHandler(new ClickHandler() {
-        public void onClick(ClickEvent event) {
-          _function_2.apply(event);
-        }
-    });
+    ObjectExtensions.<Button>operator_doubleArrow(
+      this.sendButton, _function_1);
     RootPanel _get = RootPanel.get("nameFieldContainer");
-    _get.add(this.nameField);
-    RootPanel _get_1 = RootPanel.get("sendButtonContainer");
-    _get_1.add(this.sendButton);
-    RootPanel _get_2 = RootPanel.get("errorLabelContainer");
-    _get_2.add(this.errorLabel);
+    final Procedure1<RootPanel> _function_2 = new Procedure1<RootPanel>() {
+        public void apply(final RootPanel it) {
+          it.add(GwtXtend2.this.nameField);
+          it.add(GwtXtend2.this.errorLabel);
+        }
+      };
+    ObjectExtensions.<RootPanel>operator_doubleArrow(_get, _function_2);
     this.nameField.selectAll();
     final Procedure1<DialogBox> _function_3 = new Procedure1<DialogBox>() {
         public void apply(final DialogBox it) {
@@ -156,33 +164,38 @@ public class GwtXtend2 implements EntryPoint, AsyncCallback<String> {
         public void apply(final Button it) {
           Element _element = it.getElement();
           _element.setId("closeButton");
+          final Procedure1<ClickEvent> _function = new Procedure1<ClickEvent>() {
+              public void apply(final ClickEvent it) {
+                GwtXtend2.this.dialogBox.hide();
+                GwtXtend2.this.sendButton.setEnabled(true);
+                GwtXtend2.this.sendButton.setFocus(true);
+              }
+            };
+          it.addClickHandler(new ClickHandler() {
+              public void onClick(ClickEvent event) {
+                _function.apply(event);
+              }
+          });
         }
       };
     ObjectExtensions.<Button>operator_doubleArrow(
       this.closeButton, _function_4);
-    final Procedure1<ClickEvent> _function_5 = new Procedure1<ClickEvent>() {
-        public void apply(final ClickEvent it) {
-          GwtXtend2.this.dialogBox.hide();
-          GwtXtend2.this.sendButton.setEnabled(true);
-          GwtXtend2.this.sendButton.setFocus(true);
-        }
-      };
-    this.closeButton.addClickHandler(new ClickHandler() {
-        public void onClick(ClickEvent event) {
-          _function_5.apply(event);
-        }
-    });
     VerticalPanel _verticalPanel = new VerticalPanel();
     final VerticalPanel dialogVPanel = _verticalPanel;
-    dialogVPanel.addStyleName("dialogVPanel");
-    HTML _hTML = new HTML("<b>Sending name to the server:</b>");
-    dialogVPanel.add(_hTML);
-    dialogVPanel.add(this.textToServerLabel);
-    HTML _hTML_1 = new HTML("<br><b>Server replies:</b>");
-    dialogVPanel.add(_hTML_1);
-    dialogVPanel.add(this.serverResponseLabel);
-    dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-    dialogVPanel.add(this.closeButton);
+    final Procedure1<VerticalPanel> _function_5 = new Procedure1<VerticalPanel>() {
+        public void apply(final VerticalPanel it) {
+          it.addStyleName("dialogVPanel");
+          HTML _hTML = new HTML("<b>Sending name to the server:</b>");
+          it.add(_hTML);
+          it.add(GwtXtend2.this.textToServerLabel);
+          HTML _hTML_1 = new HTML("<br><b>Server replies:</b>");
+          it.add(_hTML_1);
+          it.add(GwtXtend2.this.serverResponseLabel);
+          it.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+          it.add(GwtXtend2.this.closeButton);
+        }
+      };
+    ObjectExtensions.<VerticalPanel>operator_doubleArrow(dialogVPanel, _function_5);
     this.dialogBox.setWidget(dialogVPanel);
   }
   

@@ -49,24 +49,27 @@ class GwtXtend2 implements EntryPoint, AsyncCallback<String> {
 		nameField => [
 			text = messages.nameField
 			focus = true
-		]	    
-	    nameField.addKeyUpHandler [ event |
-	        if (event.nativeKeyCode == KeyCodes::KEY_ENTER) {
-	          sendNameToServer
-	        }
-	    ]
+			addKeyUpHandler [
+		        if (nativeKeyCode == KeyCodes::KEY_ENTER) {
+		          sendNameToServer
+	    	    }
+		    ]
+		]
 
 		// We can add style names to widgets
-		sendButton.addStyleName("sendButton")
-		sendButton.addClickHandler [
-	    	sendNameToServer
-	    ]
-		
+		sendButton => [
+			addStyleName("sendButton")
+			addClickHandler [
+	    		sendNameToServer
+		    ]
+		]
+			
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-	    RootPanel::get("nameFieldContainer").add(nameField)
-	    RootPanel::get("sendButtonContainer").add(sendButton)
-	    RootPanel::get("errorLabelContainer").add(errorLabel)
+	    RootPanel::get("nameFieldContainer") => [
+	    	add(nameField)	    	
+	    	add(errorLabel)
+	    ]
 
 	    // Focus the cursor on the name field when the app loads
 	    nameField.selectAll()
@@ -80,62 +83,62 @@ class GwtXtend2 implements EntryPoint, AsyncCallback<String> {
 		// We can set the id of a widget by accessing its Element
 	    closeButton => [
 	    	element.id = "closeButton"
-	    ]
-	    // Add a handler to close the DialogBox
-	    closeButton.addClickHandler [
-	    	dialogBox.hide
-	    	sendButton.enabled = true
-	    	sendButton.focus = true
+	    	
+		    // Add a handler to close the DialogBox
+	    	addClickHandler [
+		    	dialogBox.hide
+		    	sendButton.enabled = true
+		    	sendButton.focus = true
+		    ]
 	    ]
        
 	    
 	    val dialogVPanel = new VerticalPanel
-	    dialogVPanel.addStyleName("dialogVPanel")
-	    dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"))
-	    dialogVPanel.add(textToServerLabel)
-	    dialogVPanel.add(new HTML("<br><b>Server replies:</b>"))
-	    dialogVPanel.add(serverResponseLabel)
-	    dialogVPanel.setHorizontalAlignment(VerticalPanel::ALIGN_RIGHT)
-	    dialogVPanel.add(closeButton)
+	    dialogVPanel => [
+	    	addStyleName("dialogVPanel")
+	    	add(new HTML("<b>Sending name to the server:</b>"))
+	    	add(textToServerLabel)
+	    	add(new HTML("<br><b>Server replies:</b>"))
+	    	add(serverResponseLabel)
+	    	setHorizontalAlignment(VerticalPanel::ALIGN_RIGHT)
+	    	add(closeButton)
+	    ]
 	    dialogBox.widget = dialogVPanel	    
 	  }	
 
-	      /**
-	       * Send the name from the nameField to the server and wait for a response.
-	       */
-	      def void sendNameToServer() {
-	        // First, we validate the input.
-	        errorLabel.text = ""
-	        val textToServer = nameField.text
-	        if (!FieldVerifier::isValidName(textToServer)) {
-	          errorLabel.setText("Please enter at least four characters")
-	          return
-	        }
+      /**
+       * Send the name from the nameField to the server and wait for a response.
+       */
+      def void sendNameToServer() {
+        // First, we validate the input.
+        errorLabel.text = ""
+        val textToServer = nameField.text
+        if (!FieldVerifier::isValidName(textToServer)) {
+          errorLabel.setText("Please enter at least four characters")
+          return
+        }
 	
-	        // Then, we send the input to the server.
-	        sendButton.setEnabled(false)
-	        textToServerLabel.setText(textToServer)
-	        serverResponseLabel.setText("")
-	        greetingService.greetServer(textToServer, this)
-	      }
+        // Then, we send the input to the server.
+        sendButton.setEnabled(false)
+        textToServerLabel.setText(textToServer)
+        serverResponseLabel.setText("")
+        greetingService.greetServer(textToServer, this)
+      }
 
-	          override void onFailure(Throwable caught) {
-	            // Show the RPC error message to the user
-	            dialogBox.text = "Remote Procedure Call - Failure"
-	            serverResponseLabel.addStyleName("serverResponseLabelError")
-	            serverResponseLabel.HTML = SERVER_ERROR
-	            dialogBox.center()
-	            closeButton.focus = true
-	          }
-	
-	          override void onSuccess(String result) {
-	            dialogBox.text = "Remote Procedure Call"
-	            serverResponseLabel.removeStyleName("serverResponseLabelError")
-	            serverResponseLabel.HTML = result
-	            dialogBox.center()
-	            closeButton.focus = true
-	          }
+      override void onFailure(Throwable caught) {
+        // Show the RPC error message to the user
+        dialogBox.text = "Remote Procedure Call - Failure"
+        serverResponseLabel.addStyleName("serverResponseLabelError")
+        serverResponseLabel.HTML = SERVER_ERROR
+        dialogBox.center()
+        closeButton.focus = true
+      }
 
-	    
-	
+      override void onSuccess(String result) {
+        dialogBox.text = "Remote Procedure Call"
+        serverResponseLabel.removeStyleName("serverResponseLabelError")
+        serverResponseLabel.HTML = result
+        dialogBox.center()
+        closeButton.focus = true
+      }
 }
