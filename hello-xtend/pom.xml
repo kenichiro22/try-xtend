@@ -25,7 +25,7 @@
 						</goals>
 						<!-- optionally you can configure a different target folder -->
 						<configuration>
-							<outputDirectory>src/main/tend-gen</outputDirectory>
+							<outputDirectory>src/main/xtend-gen</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
