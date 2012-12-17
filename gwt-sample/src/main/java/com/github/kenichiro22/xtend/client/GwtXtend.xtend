@@ -13,9 +13,9 @@ import com.google.gwt.user.client.ui.RootPanel
 import com.google.gwt.user.client.ui.TextBox
 import com.google.gwt.user.client.ui.VerticalPanel
 
-import static com.github.kenichiro22.xtend.client.GwtXtend2.*
+import static com.github.kenichiro22.xtend.client.GwtXtend.*
 
-class GwtXtend2 implements EntryPoint, AsyncCallback<String> {
+class GwtXtend implements EntryPoint, AsyncCallback<String> {
 	/**
  	* The message displayed to the user when the server cannot be reached or
  	* returns an error.

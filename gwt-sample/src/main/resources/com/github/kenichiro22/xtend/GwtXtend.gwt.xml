@@ -15,9 +15,9 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  <inherits name="org.eclipse.xtend.lib.Xtend"></inherits>
+  <inherits name="Xtend"></inherits>
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='com.github.kenichiro22.xtend.client.GwtXtend2' />
+  <entry-point class='com.github.kenichiro22.xtend.client.GwtXtend' />
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client' />
